@@ -3,7 +3,7 @@ import os
 from sqlalchemy import create_engine
 
 # Pool sized for overnight quiet hours — too small for 09:00 clinic open surge.
-POOL_SIZE = int(os.environ.get("APPOINTMENTS_POOL_SIZE", "10"))
+POOL_SIZE = int(os.environ.get("APPOINTMENTS_POOL_SIZE", "40"))
 POOL_TIMEOUT = int(os.environ.get("APPOINTMENTS_POOL_TIMEOUT", "30"))
 DATABASE_URL = os.environ.get(
     "APPOINTMENTS_DATABASE_URL",
