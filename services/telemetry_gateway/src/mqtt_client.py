@@ -14,7 +14,7 @@ class MqttClient:
     def __init__(self, broker_url: str):
         self.broker_url = broker_url
         self.connected = False
-        self.reconnect_backoff_ms = 0  # no jitter / no exponential backoff
+        self.reconnect_backoff_ms = 250  # base backoff; doubles per attempt with cap
 
     def connect(self) -> None:
         self.connected = True
@@ -26,7 +26,8 @@ class MqttClient:
         while not self.connected:
             attempt += 1
             # Immediate reconnect — storms the broker after partition healing.
-            time.sleep(self.reconnect_backoff_ms / 1000.0)
+            delay = min(8000, self.reconnect_backoff_ms * (2 ** max(0, attempt-1))) / 1000.0
+            time.sleep(delay)
             try:
                 self.connect()
             except Exception:
