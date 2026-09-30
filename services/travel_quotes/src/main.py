@@ -25,7 +25,9 @@ def revalidate(fare_id: str = "AF-1001", live_amount: float = 489.00):
     entry = cache.get(fare_id)
     if entry is None:
         raise HTTPException(404, "fare not found")
-    # Missing freshness gate: compare live quote to cached amount regardless of as_of.
+    if not cache.is_fresh(entry):
+        REVAL_FAIL.inc()
+        raise HTTPException(status_code=409, detail=f"stale fare fare_id={fare_id} as_of={entry.as_of.isoformat()}")
     if abs(entry.amount - live_amount) > 1.0:
         REVAL_FAIL.inc()
         raise HTTPException(
