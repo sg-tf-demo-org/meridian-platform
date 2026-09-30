@@ -1,7 +1,7 @@
 version: cfg-8842
 engine_image: risk-engine:2.14.0
 thresholds:
-  velocity_check_47: 0.10
+  velocity_check_47: 0.90
   device_trust_12: 0.55
   geo_mismatch_03: 0.40
 notes: "Loaded by risk_engine at process start; fingerprint emitted as risk_config_version."
