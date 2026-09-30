@@ -1,0 +1,8 @@
+FROM python:3.12-slim
+WORKDIR /app
+COPY pyproject.toml README.md ./
+COPY packages ./packages
+COPY services ./services
+COPY jobs ./jobs
+COPY configs ./configs
+RUN pip install --no-cache-dir -e .
