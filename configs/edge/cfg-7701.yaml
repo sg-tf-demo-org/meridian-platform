@@ -1,9 +1,9 @@
 version: cfg-7701
 router_image: edge-router:2.14.2
 segment_cache:
-  # quality_tier intentionally omitted in this revision — causes origin fan-out
   cache_key_fields:
     - title_id
     - bitrate
     - region
+    - quality_tier
   ttl_seconds: 120
